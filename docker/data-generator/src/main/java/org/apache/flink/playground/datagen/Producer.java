@@ -20,7 +20,6 @@ package org.apache.flink.playground.datagen;
 
 import java.time.ZoneOffset;
 import java.util.Properties;
-
 import org.apache.flink.playground.datagen.model.HealthStatus;
 import org.apache.flink.playground.datagen.model.HealthStatusSerializer;
 import org.apache.flink.playground.datagen.model.TransactionSupplier;
@@ -59,7 +58,7 @@ public class Producer implements Runnable, AutoCloseable {
       long millis = healthStatus.timestamp.atZone(ZoneOffset.UTC).toInstant().toEpochMilli();
 
       ProducerRecord<Long, HealthStatus> record =
-          new ProducerRecord<>(topic, null, millis, healthStatus);
+          new ProducerRecord<>(topic, null, millis, healthStatus.patientId, healthStatus);
       producer.send(record);
 
       try {

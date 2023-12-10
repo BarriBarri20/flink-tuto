@@ -19,8 +19,7 @@ FROM maven:3.8-eclipse-temurin-17 AS builder
 COPY ./src /opt/data-producer/src
 COPY ./pom.xml /opt/data-producer/pom.xml
 
-RUN cd /opt/data-producer; \
-    mvn clean verify
+RUN cd /opt/data-producer; mvn spotless:apply ; mvn clean verify
 
 FROM eclipse-temurin:17
 
