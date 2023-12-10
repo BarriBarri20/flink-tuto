@@ -14,9 +14,9 @@
 -- See the License for the specific language governing permissions and
 -- limitations under the License.
 
-CREATE TABLE spend_report (
-	account_id BIGINT NOT NULL,
-	log_ts     TIMESTAMP(3) NOT NULL,
-	amount	   BIGINT NOT NULL,
-	PRIMARY KEY (account_id, log_ts)
+CREATE TABLE health_report (
+        patient_id      BIGINT,
+        log_ts          TIMESTAMP(3),
+        avg_glucose     BIGINT,
+        PRIMARY KEY (patient_id, log_ts)
 );

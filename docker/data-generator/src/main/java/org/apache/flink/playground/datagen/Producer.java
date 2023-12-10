@@ -20,8 +20,9 @@ package org.apache.flink.playground.datagen;
 
 import java.time.ZoneOffset;
 import java.util.Properties;
-import org.apache.flink.playground.datagen.model.Transaction;
-import org.apache.flink.playground.datagen.model.TransactionSerializer;
+
+import org.apache.flink.playground.datagen.model.HealthStatus;
+import org.apache.flink.playground.datagen.model.HealthStatusSerializer;
 import org.apache.flink.playground.datagen.model.TransactionSupplier;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerConfig;
@@ -45,20 +46,20 @@ public class Producer implements Runnable, AutoCloseable {
 
   @Override
   public void run() {
-    KafkaProducer<Long, Transaction> producer = new KafkaProducer<>(getProperties());
+    KafkaProducer<Long, HealthStatus> producer = new KafkaProducer<>(getProperties());
 
     Throttler throttler = new Throttler(100);
 
-    TransactionSupplier transactions = new TransactionSupplier();
+    TransactionSupplier healthStatuss = new TransactionSupplier();
 
     while (isRunning) {
 
-      Transaction transaction = transactions.get();
+      HealthStatus healthStatus = healthStatuss.get();
 
-      long millis = transaction.timestamp.atZone(ZoneOffset.UTC).toInstant().toEpochMilli();
+      long millis = healthStatus.timestamp.atZone(ZoneOffset.UTC).toInstant().toEpochMilli();
 
-      ProducerRecord<Long, Transaction> record =
-          new ProducerRecord<>(topic, null, millis, transaction.accountId, transaction);
+      ProducerRecord<Long, HealthStatus> record =
+          new ProducerRecord<>(topic, null, millis, healthStatus);
       producer.send(record);
 
       try {
@@ -82,7 +83,7 @@ public class Producer implements Runnable, AutoCloseable {
     props.put(ProducerConfig.ACKS_CONFIG, "all");
     props.put(ProducerConfig.RETRIES_CONFIG, 0);
     props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, LongSerializer.class);
-    props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, TransactionSerializer.class);
+    props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, HealthStatusSerializer.class);
 
     return props;
   }

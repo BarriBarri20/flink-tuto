@@ -18,13 +18,30 @@
 
 package org.apache.flink.playground.datagen.model;
 
-import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Map;
+import org.apache.kafka.common.serialization.Serializer;
 
-/** A simple financial transaction. */
-public class Transaction {
-  public long accountId;
+/** Serializes a {@link HealthStatus} into a CSV record. */
+public class HealthStatusSerializer implements Serializer<HealthStatus> {
 
-  public int amount;
+  private static final DateTimeFormatter formatter =
+      DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
-  public LocalDateTime timestamp;
+  @Override
+  public void configure(Map<String, ?> map, boolean b) {}
+
+  @Override
+  public byte[] serialize(String s, HealthStatus transaction) {
+    String csv =
+        String.format(
+            // Avoiding spaces here to workaround FLINK-23073
+            "%s,%s,%s,%s,%s,%s",
+            transaction.patientId, transaction.age, transaction.bmi, transaction.gender, transaction.timestamp.format(formatter));
+
+    return csv.getBytes();
+  }
+
+  @Override
+  public void close() {}
 }
