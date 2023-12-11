@@ -45,7 +45,7 @@ public class TransactionSupplier implements Supplier<HealthStatus> {
   public HealthStatus get() {
     HealthStatus transaction = new HealthStatus();
     transaction.patientId = patients.next();
-    transaction.bmi = generator.nextLong(1000);
+    transaction.glucose = generator.nextLong(1000);
     transaction.age = generator.nextLong(332);
     transaction.gender = generator.nextLong(2);
     transaction.timestamp = timestamps.next();

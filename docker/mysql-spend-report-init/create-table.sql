@@ -19,6 +19,6 @@ CREATE TABLE health_report (
                                gender BIGINT,
                                start_time TIMESTAMP(3),
                                end_time TIMESTAMP(3),
-                               avg_age BIGINT,
+                               avg_glucose BIGINT,
                                PRIMARY KEY (patient_id, start_time)
 );

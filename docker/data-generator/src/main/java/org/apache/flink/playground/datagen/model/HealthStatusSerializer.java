@@ -37,7 +37,7 @@ public class HealthStatusSerializer implements Serializer<HealthStatus> {
         String.format(
             // Avoiding spaces here to workaround FLINK-23073
             "%s,%s,%s,%s,%s,%s",
-            transaction.patientId, transaction.isSmoker, transaction.age, transaction.gender, transaction.bmi, transaction.timestamp.format(formatter));
+            transaction.patientId, transaction.isSmoker, transaction.age, transaction.gender, transaction.glucose, transaction.timestamp.format(formatter));
 
     return csv.getBytes();
   }

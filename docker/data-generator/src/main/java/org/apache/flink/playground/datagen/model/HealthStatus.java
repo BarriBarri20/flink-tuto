@@ -26,7 +26,7 @@ public class HealthStatus {
   public long isSmoker;
   public long age;
   public long gender;
-  public long bmi;
+  public long glucose;
 
   public LocalDateTime timestamp;
 }
