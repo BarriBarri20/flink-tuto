@@ -15,8 +15,10 @@
 -- limitations under the License.
 
 CREATE TABLE health_report (
-        patient_id      BIGINT,
-        log_ts          TIMESTAMP(3),
-        avg_glucose     BIGINT,
-        PRIMARY KEY (patient_id, log_ts)
+                               patient_id BIGINT,
+                               gender BIGINT,
+                               start_time TIMESTAMP(3),
+                               end_time TIMESTAMP(3),
+                               avg_age BIGINT,
+                               PRIMARY KEY (patient_id, start_time)
 );

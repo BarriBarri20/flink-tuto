@@ -31,7 +31,7 @@ public class DataGenerator {
       Optional.ofNullable(System.getenv("DATAGEN_KAFKA")).orElse("kafka:9092");
 
   private static final String TOPIC =
-      Optional.ofNullable(System.getenv("DATAGEN_TOPIC")).orElse("transactions");
+      Optional.ofNullable(System.getenv("DATAGEN_TOPIC")).orElse("health_status");
 
   public static void main(String[] args) {
     Producer producer = new Producer(KAFKA, TOPIC);
